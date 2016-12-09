@@ -16,7 +16,6 @@ struct Post {
     let userId: Int
     let title: String
     let body: String
-    var user: User?
     var comments: [Comment]
 }
 
@@ -27,7 +26,6 @@ extension Post: Decodable {
             <*> j <| "userId"
             <*> j <| "title"
             <*> j <| "body"
-            <*> .success(nil)
             <*> .success([])
     }
 }
