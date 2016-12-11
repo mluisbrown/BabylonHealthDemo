@@ -1,6 +1,8 @@
 github "thoughtbot/Curry" "v3.0.0"
+github "devlucky/Kakapo" "2.1.0"
 github "Quick/Nimble" "v5.1.1"
 github "Quick/Quick" "v1.0.0"
 github "antitypical/Result" "3.1.0"
 github "thoughtbot/Runes" "v4.0.1"
+github "johnsundell/wrap" "2.0.2"
 github "thoughtbot/Argo" "v4.1.1"

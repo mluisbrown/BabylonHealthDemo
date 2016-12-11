@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		4C0602931DF76243000B8DFB /* PostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0602921DF76243000B8DFB /* PostsViewModel.swift */; };
 		4C0602951DF78315000B8DFB /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C0602941DF78315000B8DFB /* Result.framework */; };
+		4C1E39661DFDF0FE00183932 /* Wrap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1E39651DFDF0FE00183932 /* Wrap.framework */; };
+		4C1E39681DFDF13000183932 /* Kakapo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1E39671DFDF13000183932 /* Kakapo.framework */; };
+		4C1E39691DFDF14100183932 /* Kakapo.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C1E39671DFDF13000183932 /* Kakapo.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C8EAE4C1DF8D583009A7559 /* Argo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8EAE491DF8D583009A7559 /* Argo.framework */; };
 		4C8EAE4D1DF8D583009A7559 /* Curry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8EAE4A1DF8D583009A7559 /* Curry.framework */; };
 		4C8EAE4E1DF8D583009A7559 /* Runes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8EAE4B1DF8D583009A7559 /* Runes.framework */; };
@@ -18,7 +21,6 @@
 		4CAF182E1DF600C500C20F07 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CAF182C1DF600C500C20F07 /* Main.storyboard */; };
 		4CAF18301DF600C500C20F07 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CAF182F1DF600C500C20F07 /* Assets.xcassets */; };
 		4CAF18331DF600C500C20F07 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CAF18311DF600C500C20F07 /* LaunchScreen.storyboard */; };
-		4CAF183E1DF600C500C20F07 /* BabylonHealthDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF183D1DF600C500C20F07 /* BabylonHealthDemoTests.swift */; };
 		4CAF184B1DF6082700C20F07 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CAF18491DF6082700C20F07 /* Nimble.framework */; };
 		4CAF184C1DF6082700C20F07 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CAF184A1DF6082700C20F07 /* Quick.framework */; };
 		4CAF184E1DF6087D00C20F07 /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CAF18491DF6082700C20F07 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -45,6 +47,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				4C1E39691DFDF14100183932 /* Kakapo.framework in CopyFiles */,
 				4CAF184E1DF6087D00C20F07 /* Nimble.framework in CopyFiles */,
 				4CAF184F1DF6087D00C20F07 /* Quick.framework in CopyFiles */,
 			);
@@ -55,6 +58,8 @@
 /* Begin PBXFileReference section */
 		4C0602921DF76243000B8DFB /* PostsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostsViewModel.swift; sourceTree = "<group>"; };
 		4C0602941DF78315000B8DFB /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
+		4C1E39651DFDF0FE00183932 /* Wrap.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Wrap.framework; path = Carthage/Build/iOS/Wrap.framework; sourceTree = "<group>"; };
+		4C1E39671DFDF13000183932 /* Kakapo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kakapo.framework; path = Carthage/Build/iOS/Kakapo.framework; sourceTree = "<group>"; };
 		4C8EAE491DF8D583009A7559 /* Argo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Argo.framework; path = Carthage/Build/iOS/Argo.framework; sourceTree = "<group>"; };
 		4C8EAE4A1DF8D583009A7559 /* Curry.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Curry.framework; path = Carthage/Build/iOS/Curry.framework; sourceTree = "<group>"; };
 		4C8EAE4B1DF8D583009A7559 /* Runes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Runes.framework; path = Carthage/Build/iOS/Runes.framework; sourceTree = "<group>"; };
@@ -67,7 +72,6 @@
 		4CAF18321DF600C500C20F07 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4CAF18341DF600C500C20F07 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4CAF18391DF600C500C20F07 /* BabylonHealthDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BabylonHealthDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4CAF183D1DF600C500C20F07 /* BabylonHealthDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BabylonHealthDemoTests.swift; sourceTree = "<group>"; };
 		4CAF183F1DF600C500C20F07 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4CAF18491DF6082700C20F07 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		4CAF184A1DF6082700C20F07 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
@@ -85,6 +89,7 @@
 				4C8EAE4C1DF8D583009A7559 /* Argo.framework in Frameworks */,
 				4C8EAE4D1DF8D583009A7559 /* Curry.framework in Frameworks */,
 				4C8EAE4E1DF8D583009A7559 /* Runes.framework in Frameworks */,
+				4C1E39661DFDF0FE00183932 /* Wrap.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +99,7 @@
 			files = (
 				4CAF184B1DF6082700C20F07 /* Nimble.framework in Frameworks */,
 				4CAF184C1DF6082700C20F07 /* Quick.framework in Frameworks */,
+				4C1E39681DFDF13000183932 /* Kakapo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,7 +151,6 @@
 		4CAF183C1DF600C500C20F07 /* BabylonHealthDemoTests */ = {
 			isa = PBXGroup;
 			children = (
-				4CAF183D1DF600C500C20F07 /* BabylonHealthDemoTests.swift */,
 				4C8EAE4F1DF8DD1C009A7559 /* PostsViewModelTests.swift */,
 				4CAF183F1DF600C500C20F07 /* Info.plist */,
 			);
@@ -155,6 +160,8 @@
 		4CAF18481DF6082600C20F07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4C1E39671DFDF13000183932 /* Kakapo.framework */,
+				4C1E39651DFDF0FE00183932 /* Wrap.framework */,
 				4C8EAE491DF8D583009A7559 /* Argo.framework */,
 				4C8EAE4A1DF8D583009A7559 /* Curry.framework */,
 				4C8EAE4B1DF8D583009A7559 /* Runes.framework */,
@@ -287,7 +294,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Argo.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Curry.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Runes.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Wrap.framework",
 			);
 			outputPaths = (
 			);
@@ -316,7 +323,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C8EAE501DF8DD1C009A7559 /* PostsViewModelTests.swift in Sources */,
-				4CAF183E1DF600C500C20F07 /* BabylonHealthDemoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -28,29 +28,55 @@ class PostsViewModelTests: QuickSpec {
         "}" +
     "]"
 
-    let userJSON = "{" +
-        "  \"id\": 4," +
-        "  \"name\": \"Patricia Lebsack\"," +
-        "  \"username\": \"Karianne\"," +
-        "  \"email\": \"Julianne.OConner@kory.org\"," +
-        "  \"address\": {" +
-        "    \"street\": \"Hoeger Mall\"," +
-        "    \"suite\": \"Apt. 692\"," +
-        "    \"city\": \"South Elvis\"," +
-        "    \"zipcode\": \"53919-4257\"," +
-        "    \"geo\": {" +
-        "      \"lat\": \"29.4572\"," +
-        "      \"lng\": \"-164.2990\"" +
-        "    }" +
-        "  }," +
-        "  \"phone\": \"493-170-9623 x156\"," +
-        "  \"website\": \"kale.biz\"," +
-        "  \"company\": {" +
-        "    \"name\": \"Robel-Corkery\"," +
-        "    \"catchPhrase\": \"Multi-tiered zero tolerance productivity\"," +
-        "    \"bs\": \"transition cutting-edge web services\"" +
-        "  }" +
-        "}"
+    let usersJSON =
+        "[" +
+            "  {" +
+            "    \"id\": 1," +
+            "    \"name\": \"Leanne Graham\"," +
+            "    \"username\": \"Bret\"," +
+            "    \"email\": \"Sincere@april.biz\"," +
+            "    \"address\": {" +
+            "      \"street\": \"Kulas Light\"," +
+            "      \"suite\": \"Apt. 556\"," +
+            "      \"city\": \"Gwenborough\"," +
+            "      \"zipcode\": \"92998-3874\"," +
+            "      \"geo\": {" +
+            "        \"lat\": \"-37.3159\"," +
+            "        \"lng\": \"81.1496\"" +
+            "      }" +
+            "    }," +
+            "    \"phone\": \"1-770-736-8031 x56442\"," +
+            "    \"website\": \"hildegard.org\"," +
+            "    \"company\": {" +
+            "      \"name\": \"Romaguera-Crona\"," +
+            "      \"catchPhrase\": \"Multi-layered client-server neural-net\"," +
+            "      \"bs\": \"harness real-time e-markets\"" +
+            "    }" +
+            "  }," +
+            "  {" +
+            "    \"id\": 2," +
+            "    \"name\": \"Ervin Howell\"," +
+            "    \"username\": \"Antonette\"," +
+            "    \"email\": \"Shanna@melissa.tv\"," +
+            "    \"address\": {" +
+            "      \"street\": \"Victor Plains\"," +
+            "      \"suite\": \"Suite 879\"," +
+            "      \"city\": \"Wisokyburgh\"," +
+            "      \"zipcode\": \"90566-7771\"," +
+            "      \"geo\": {" +
+            "        \"lat\": \"-43.9509\"," +
+            "        \"lng\": \"-34.4618\"" +
+            "      }" +
+            "    }," +
+            "    \"phone\": \"010-692-6593 x09125\"," +
+            "    \"website\": \"anastasia.net\"," +
+            "    \"company\": {" +
+            "      \"name\": \"Deckow-Crist\"," +
+            "      \"catchPhrase\": \"Proactive didactic contingency\"," +
+            "      \"bs\": \"synergize scalable supply-chains\"" +
+            "    }" +
+            "  }" +
+    "]"
     
     override func spec() {
         describe("JSON parsing") {
@@ -63,13 +89,55 @@ class PostsViewModelTests: QuickSpec {
                 expect(posts?.count).to(equal(2))
             }
             
-            it("parses a JSON User") {
+            it("parses JSON Users into Users") {
                 let postsViewModel = PostsViewModel()
                 
-                let data = self.userJSON.data(using: .utf8)!
-                let user: User? = postsViewModel.parseObject(from: data)
-                expect(user).toNot(beNil())
+                let data = self.usersJSON.data(using: .utf8)!
+                let users: [User]? = postsViewModel.parseArray(from: data)
+                expect(users).toNot(beNil())
+                expect(users?.count).to(equal(2))
             }
+        }
+        
+        describe("local storage") {
+            it("stores posts to local storage") {
+                try? FileManager.default.removeItem(at: PostsViewModel.LocalStorageURL.posts)
+
+                let postsViewModel = PostsViewModel()
+                
+                let data = self.postsJSON.data(using: .utf8)!
+                let posts: [Post]? = postsViewModel.parseArray(from: data)
+
+                postsViewModel.posts = posts
+                
+                var threw = false
+                do {
+                    try postsViewModel.writePostsToLocalStorage()
+                    
+                } catch {
+                    threw = true
+                }
+                
+                expect(threw).to(beFalse())
+            }
+
+            it("reads posts from local storage") {
+                try? FileManager.default.removeItem(at: PostsViewModel.LocalStorageURL.posts)
+                
+                let postsViewModel = PostsViewModel()
+                
+                let data = self.postsJSON.data(using: .utf8)!
+                let posts: [Post]? = postsViewModel.parseArray(from: data)
+                
+                postsViewModel.posts = posts
+                
+                let postsFromStorage: [Post]
+                try? postsViewModel.writePostsToLocalStorage()
+                postsFromStorage = postsViewModel.loadPostsFromLocalStorage()
+                
+                expect(postsFromStorage.count).to(equal(2))
+            }
+        
         }
         
     }

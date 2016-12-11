@@ -9,6 +9,7 @@
 import Foundation
 import Result
 import Argo
+import Wrap
 
 class PostsViewModel {
     struct UrlString {
@@ -24,14 +25,6 @@ class PostsViewModel {
     }
     
     private let httpOk = 200
-    
-    private let localStorageURL: URL = {
-        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
-        let documentsDirectory = paths.first!
-        let path = URL(fileURLWithPath: documentsDirectory, isDirectory: true).appendingPathComponent("posts.plist")
-
-        return path
-    }()
     
     var posts: [Post]?
     var users: [Int : User]?
@@ -65,22 +58,14 @@ class PostsViewModel {
             switch result {
             case .failure(let error):
                 NSLog("Error loading users from network: \(error)")
-                self.users = nil // self.loadPostsFromLocalStorage()
+                self.users = self.loadUsersFromLocalStorage()
             case .success(let users):
-                
-                self.users = users.reduce([Int: User]()) { (userMap, user) -> [Int: User] in
-                    var newMap = userMap
-                    newMap[user.id] = user
-                    return newMap
-                }
-                
-                
-                
-                self.users = [Int: User]()
+                var userMap = [Int: User]()
                 users.forEach {
-                    self.users![$0.id] = $0
+                    userMap[$0.id] = $0
                 }
                 
+                self.users = userMap
             }
             
             completion(self.users![post.userId])
@@ -107,7 +92,7 @@ class PostsViewModel {
             else {
                 completion(.success([]))
             }
-        }
+        }.resume()
     }
     
     func parseArray<T: Decodable>(from data: Data) -> [T]? where T == T.DecodedType {
@@ -129,28 +114,68 @@ class PostsViewModel {
         
         return decode(j)
     }
+}
+
+// MARK: functions for reading and writing to local storage
+extension PostsViewModel {
+    struct LocalStorageURL {
+        static let users = documentURL(with: "users.json")
+        static let posts = documentURL(with: "posts.json")
+        
+        private static func documentURL(with filename: String) -> URL {
+            let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+            let documentsDirectory = paths.first!
+            let path = URL(fileURLWithPath: documentsDirectory, isDirectory: true).appendingPathComponent(filename)
+            
+            return path
+        }
+    }
+    
+    func loadUsersFromLocalStorage() -> [Int : User] {
+        guard let data = try? Data(contentsOf: LocalStorageURL.users),
+            let users = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Int : User] else {
+                return [:]
+        }
+        
+        return users
+    }
+    
+    func writeUsersToLocalStorage() throws {
+        guard let users = users else {
+            return
+        }
+        
+        do {
+            let data: Data = try wrap(users)
+            try data.write(to: LocalStorageURL.users, options: .atomic)
+        }
+        catch {
+            NSLog("Error writing users to local storage: \(error)")
+            throw error
+        }
+    }
     
     func loadPostsFromLocalStorage() -> [Post] {
-        guard let data = try? Data(contentsOf: localStorageURL),
-            let posts = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Post] else {
-            return []
+        guard let data = try? Data(contentsOf: LocalStorageURL.posts),
+            let posts: [Post] = parseArray(from: data) else {
+                return []
         }
-
+        
         return posts
     }
     
-    func writePostsToLocalStorage() {
+    func writePostsToLocalStorage() throws {
         guard let posts = posts else {
             return
         }
         
-        let data = NSKeyedArchiver.archivedData(withRootObject: posts)
-        
         do {
-            try data.write(to: localStorageURL, options: .atomic)
+            let data: Data = try wrap(posts)
+            try data.write(to: LocalStorageURL.posts, options: .atomic)
         }
         catch {
             NSLog("Error writing posts to local storage: \(error)")
+            throw error
         }
     }
 }
