@@ -9,7 +9,14 @@
 import Foundation
 import Quick
 import Nimble
+import Kakapo
 @testable import BabylonHealthDemo
+
+extension Post : Serializable {
+    
+}
+
+
 
 class PostsViewModelTests: QuickSpec {
     
@@ -77,6 +84,13 @@ class PostsViewModelTests: QuickSpec {
             "    }" +
             "  }" +
     "]"
+
+    let posts = [Post(id: 1, userId: 1, title: "a title", body: "a body", comments: []),
+                 Post(id: 2, userId: 1, title: "another title", body: "another body", comments: [])]
+    
+    let users = [User(id: 1, name: "a name"), User(id: 2, name: "another name")]
+    let userMap = [1 : User(id: 1, name: "a name"), 2 : User(id: 2, name: "another name")]
+    
     
     override func spec() {
         describe("JSON parsing") {
@@ -137,10 +151,69 @@ class PostsViewModelTests: QuickSpec {
                 
                 expect(postsFromStorage.count).to(equal(2))
             }
-        
+            
+            it("writes users to local storage") {
+                try? FileManager.default.removeItem(at: PostsViewModel.LocalStorageURL.users)
+                
+                let postsViewModel = PostsViewModel()
+                postsViewModel.users = self.userMap
+                
+                var threw = false
+                do {
+                    try postsViewModel.writeUsersToLocalStorage()
+                    
+                } catch {
+                    threw = true
+                }
+                
+                expect(threw).to(beFalse())
+            }
+
+            it("reads users from local storage") {
+                try? FileManager.default.removeItem(at: PostsViewModel.LocalStorageURL.users)
+                
+                let postsViewModel = PostsViewModel()
+                postsViewModel.users = self.userMap
+                
+                let usersFromStorage: [Int : User]
+                try? postsViewModel.writeUsersToLocalStorage()
+                usersFromStorage = postsViewModel.loadUsersFromLocalStorage()
+                
+                expect(usersFromStorage.count).to(equal(2))
+            }
+            
         }
         
+        describe("network requests") {
+            let router = Router.register("https://jsonplaceholder.typicode.com")
+            router.get("/posts") { request in
+                return self.posts
+            }
+            
+            it("loads posts from the network") {
+                try? FileManager.default.removeItem(at: PostsViewModel.LocalStorageURL.posts)
+
+                let postsViewModel = PostsViewModel()
+                var loadedPosts = [Post]()
+                postsViewModel.loadPosts() { somePosts in
+                    loadedPosts = somePosts
+                }
+                
+                expect(loadedPosts.count).toEventually(equal(2))
+            }
+
+            it("loads users from the network") {
+                try? FileManager.default.removeItem(at: PostsViewModel.LocalStorageURL.users)
+                
+                let postsViewModel = PostsViewModel()
+                var user: User?
+                postsViewModel.loadUser(for: self.posts.first!) { aUser in
+                    user = aUser
+                }
+                
+                expect(user).toEventuallyNot(beNil())
+                expect(user!.id).toEventually(equal(1))
+            }
+        }
     }
-    
-    
 }

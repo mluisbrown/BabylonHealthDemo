@@ -14,9 +14,9 @@ import Wrap
 class PostsViewModel {
     struct UrlString {
         private init() {}
-        static let posts = "http://jsonplaceholder.typicode.com/posts"
-        static let users = "http://jsonplaceholder.typicode.com/users"
-        static let comments = "http://jsonplaceholder.typicode.com/comments?postId="
+        static let posts = "https://jsonplaceholder.typicode.com/posts"
+        static let users = "https://jsonplaceholder.typicode.com/users"
+        static let comments = "https://jsonplaceholder.typicode.com/comments?postId="
     }
     
     enum PostError: Error {
@@ -60,21 +60,25 @@ class PostsViewModel {
                 NSLog("Error loading users from network: \(error)")
                 self.users = self.loadUsersFromLocalStorage()
             case .success(let users):
-                var userMap = [Int: User]()
-                users.forEach {
-                    userMap[$0.id] = $0
-                }
-                
-                self.users = userMap
+                self.users = self.userMap(from: users)
             }
             
             completion(self.users![post.userId])
         }
     }
     
+    func userMap(from users: [User]) -> [Int : User] {
+        var userMap = [Int: User]()
+        users.forEach {
+            userMap[$0.id] = $0
+        }
+        
+        return userMap
+    }
+    
     func loadCollectionFrom<T: Decodable>(urlString: String, completion: @escaping (Result<[T], AnyError>) -> ())
         where T == T.DecodedType {
-        let session = URLSession(configuration: URLSessionConfiguration.default)
+        let session = URLSession.shared
 
         session.dataTask(with: URL(string: urlString)!) { data, response, error in
             guard case .none = error else {
@@ -133,11 +137,11 @@ extension PostsViewModel {
     
     func loadUsersFromLocalStorage() -> [Int : User] {
         guard let data = try? Data(contentsOf: LocalStorageURL.users),
-            let users = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Int : User] else {
+            let users: [User] = parseArray(from: data) else {
                 return [:]
         }
         
-        return users
+        return userMap(from: users)
     }
     
     func writeUsersToLocalStorage() throws {
@@ -146,7 +150,7 @@ extension PostsViewModel {
         }
         
         do {
-            let data: Data = try wrap(users)
+            let data: Data = try wrap(Array(users.values))
             try data.write(to: LocalStorageURL.users, options: .atomic)
         }
         catch {
