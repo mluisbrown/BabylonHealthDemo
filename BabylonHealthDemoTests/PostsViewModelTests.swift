@@ -10,12 +10,17 @@ import Foundation
 import Quick
 import Nimble
 import Kakapo
+import Argo
+import Runes
 @testable import BabylonHealthDemo
 
-extension Post : Serializable {
+extension Post: Serializable {
     
 }
 
+extension User: Serializable {
+    
+}
 
 
 class PostsViewModelTests: QuickSpec {
@@ -95,19 +100,15 @@ class PostsViewModelTests: QuickSpec {
     override func spec() {
         describe("JSON parsing") {
             it("parses JSON Posts into Posts") {
-                let postsViewModel = PostsViewModel()
-                
                 let data = self.postsJSON.data(using: .utf8)!
-                let posts: [Post]? = postsViewModel.parseArray(from: data)
+                let posts: [Post]? = try? parseArray(from: data).dematerialize()
                 expect(posts).toNot(beNil())
                 expect(posts?.count).to(equal(2))
             }
             
             it("parses JSON Users into Users") {
-                let postsViewModel = PostsViewModel()
-                
                 let data = self.usersJSON.data(using: .utf8)!
-                let users: [User]? = postsViewModel.parseArray(from: data)
+                let users: [User]? = try? parseArray(from: data).dematerialize()
                 expect(users).toNot(beNil())
                 expect(users?.count).to(equal(2))
             }
@@ -115,19 +116,11 @@ class PostsViewModelTests: QuickSpec {
         
         describe("local storage") {
             it("stores posts to local storage") {
-                try? FileManager.default.removeItem(at: PostsViewModel.LocalStorageURL.posts)
-
-                let postsViewModel = PostsViewModel()
-                
-                let data = self.postsJSON.data(using: .utf8)!
-                let posts: [Post]? = postsViewModel.parseArray(from: data)
-
-                postsViewModel.posts = posts
+                try? FileManager.default.removeItem(at: LocalResource.posts)
                 
                 var threw = false
                 do {
-                    try postsViewModel.writePostsToLocalStorage()
-                    
+                    try write(collection: self.posts, to: LocalResource.posts)
                 } catch {
                     threw = true
                 }
@@ -136,32 +129,21 @@ class PostsViewModelTests: QuickSpec {
             }
 
             it("reads posts from local storage") {
-                try? FileManager.default.removeItem(at: PostsViewModel.LocalStorageURL.posts)
-                
-                let postsViewModel = PostsViewModel()
-                
-                let data = self.postsJSON.data(using: .utf8)!
-                let posts: [Post]? = postsViewModel.parseArray(from: data)
-                
-                postsViewModel.posts = posts
+                try? FileManager.default.removeItem(at: LocalResource.posts)
                 
                 let postsFromStorage: [Post]
-                try? postsViewModel.writePostsToLocalStorage()
-                postsFromStorage = postsViewModel.loadPostsFromLocalStorage()
+                try? write(collection: self.posts, to: LocalResource.posts)
+                postsFromStorage = loadCollection(from: LocalResource.posts)
                 
                 expect(postsFromStorage.count).to(equal(2))
             }
             
             it("writes users to local storage") {
-                try? FileManager.default.removeItem(at: PostsViewModel.LocalStorageURL.users)
-                
-                let postsViewModel = PostsViewModel()
-                postsViewModel.users = self.userMap
+                try? FileManager.default.removeItem(at: LocalResource.users)
                 
                 var threw = false
                 do {
-                    try postsViewModel.writeUsersToLocalStorage()
-                    
+                    try write(collection: self.users, to: LocalResource.users)
                 } catch {
                     threw = true
                 }
@@ -170,14 +152,11 @@ class PostsViewModelTests: QuickSpec {
             }
 
             it("reads users from local storage") {
-                try? FileManager.default.removeItem(at: PostsViewModel.LocalStorageURL.users)
+                try? FileManager.default.removeItem(at: LocalResource.users)
                 
-                let postsViewModel = PostsViewModel()
-                postsViewModel.users = self.userMap
-                
-                let usersFromStorage: [Int : User]
-                try? postsViewModel.writeUsersToLocalStorage()
-                usersFromStorage = postsViewModel.loadUsersFromLocalStorage()
+                let usersFromStorage: [User]
+                try? write(collection: self.users, to: LocalResource.users)
+                usersFromStorage = loadCollection(from: LocalResource.users)
                 
                 expect(usersFromStorage.count).to(equal(2))
             }
@@ -189,9 +168,12 @@ class PostsViewModelTests: QuickSpec {
             router.get("/posts") { request in
                 return self.posts
             }
+            router.get("/users") { request in
+                return self.users
+            }
             
             it("loads posts from the network") {
-                try? FileManager.default.removeItem(at: PostsViewModel.LocalStorageURL.posts)
+                try? FileManager.default.removeItem(at: LocalResource.posts)
 
                 let postsViewModel = PostsViewModel()
                 var loadedPosts = [Post]()
@@ -203,7 +185,7 @@ class PostsViewModelTests: QuickSpec {
             }
 
             it("loads users from the network") {
-                try? FileManager.default.removeItem(at: PostsViewModel.LocalStorageURL.users)
+                try? FileManager.default.removeItem(at: LocalResource.users)
                 
                 let postsViewModel = PostsViewModel()
                 var user: User?

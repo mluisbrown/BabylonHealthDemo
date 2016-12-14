@@ -16,6 +16,10 @@
 		4C8EAE4D1DF8D583009A7559 /* Curry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8EAE4A1DF8D583009A7559 /* Curry.framework */; };
 		4C8EAE4E1DF8D583009A7559 /* Runes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8EAE4B1DF8D583009A7559 /* Runes.framework */; };
 		4C8EAE501DF8DD1C009A7559 /* PostsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8EAE4F1DF8DD1C009A7559 /* PostsViewModelTests.swift */; };
+		4CAADFD11E0186FB00218D6F /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAADFD01E0186FB00218D6F /* Network.swift */; };
+		4CAADFD41E0194AC00218D6F /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAADFD31E0194AC00218D6F /* Persistence.swift */; };
+		4CAADFD51E01A20B00218D6F /* Argo.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C8EAE491DF8D583009A7559 /* Argo.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4CAADFD61E01A20B00218D6F /* Runes.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C8EAE4B1DF8D583009A7559 /* Runes.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CAF18291DF600C500C20F07 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF18281DF600C500C20F07 /* AppDelegate.swift */; };
 		4CAF182B1DF600C500C20F07 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF182A1DF600C500C20F07 /* ViewController.swift */; };
 		4CAF182E1DF600C500C20F07 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CAF182C1DF600C500C20F07 /* Main.storyboard */; };
@@ -47,6 +51,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				4CAADFD51E01A20B00218D6F /* Argo.framework in CopyFiles */,
+				4CAADFD61E01A20B00218D6F /* Runes.framework in CopyFiles */,
 				4C1E39691DFDF14100183932 /* Kakapo.framework in CopyFiles */,
 				4CAF184E1DF6087D00C20F07 /* Nimble.framework in CopyFiles */,
 				4CAF184F1DF6087D00C20F07 /* Quick.framework in CopyFiles */,
@@ -64,6 +70,8 @@
 		4C8EAE4A1DF8D583009A7559 /* Curry.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Curry.framework; path = Carthage/Build/iOS/Curry.framework; sourceTree = "<group>"; };
 		4C8EAE4B1DF8D583009A7559 /* Runes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Runes.framework; path = Carthage/Build/iOS/Runes.framework; sourceTree = "<group>"; };
 		4C8EAE4F1DF8DD1C009A7559 /* PostsViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostsViewModelTests.swift; sourceTree = "<group>"; };
+		4CAADFD01E0186FB00218D6F /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		4CAADFD31E0194AC00218D6F /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		4CAF18251DF600C500C20F07 /* BabylonHealthDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BabylonHealthDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CAF18281DF600C500C20F07 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CAF182A1DF600C500C20F07 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +122,22 @@
 			path = PostsView;
 			sourceTree = "<group>";
 		};
+		4CAADFCF1E0186D700218D6F /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				4CAADFD01E0186FB00218D6F /* Network.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		4CAADFD21E01949B00218D6F /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				4CAADFD31E0194AC00218D6F /* Persistence.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
 		4CAF181C1DF600C400C20F07 = {
 			isa = PBXGroup;
 			children = (
@@ -136,6 +160,8 @@
 		4CAF18271DF600C500C20F07 /* BabylonHealthDemo */ = {
 			isa = PBXGroup;
 			children = (
+				4CAADFD21E01949B00218D6F /* Persistence */,
+				4CAADFCF1E0186D700218D6F /* Network */,
 				4C0602911DF7622F000B8DFB /* PostsView */,
 				4CAF18521DF610EB00C20F07 /* Models */,
 				4CAF18281DF600C500C20F07 /* AppDelegate.swift */,
@@ -229,7 +255,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Michael Brown";
 				TargetAttributes = {
 					4CAF18241DF600C400C20F07 = {
@@ -295,6 +321,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Argo.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Curry.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Wrap.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Runes.framework",
 			);
 			outputPaths = (
 			);
@@ -310,10 +337,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CAF18581DF6171900C20F07 /* Comment.swift in Sources */,
+				4CAADFD41E0194AC00218D6F /* Persistence.swift in Sources */,
 				4CAF18561DF611C000C20F07 /* User.swift in Sources */,
 				4C0602931DF76243000B8DFB /* PostsViewModel.swift in Sources */,
 				4CAF18541DF6110600C20F07 /* Post.swift in Sources */,
 				4CAF182B1DF600C500C20F07 /* ViewController.swift in Sources */,
+				4CAADFD11E0186FB00218D6F /* Network.swift in Sources */,
 				4CAF18291DF600C500C20F07 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -374,6 +403,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -425,6 +455,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
