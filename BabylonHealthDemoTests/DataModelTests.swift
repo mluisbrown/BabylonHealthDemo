@@ -24,7 +24,7 @@ extension User: Serializable {
 }
 
 
-class PostsViewModelTests: QuickSpec {
+class DataModelTests: QuickSpec {
     
     let posts = [Post(id: 1, userId: 1, title: "a title", body: "a body", comments: []),
                  Post(id: 2, userId: 1, title: "another title", body: "another body", comments: [])]
