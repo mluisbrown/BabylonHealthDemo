@@ -24,7 +24,7 @@ struct NetworkResource {
     private init() {}
     static let posts = "https://jsonplaceholder.typicode.com/posts"
     static let users = "https://jsonplaceholder.typicode.com/users"
-    static let comments = "https://jsonplaceholder.typicode.com/comments?postId="
+    static let comments = "https://jsonplaceholder.typicode.com/comments?postId=%d"
 }
 
 

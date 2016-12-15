@@ -1,5 +1,5 @@
 //
-//  PostsViewModel.swift
+//  DataModel.swift
 //  BabylonHealthDemo
 //
 //  Created by Michael Brown on 06/12/2016.
@@ -11,7 +11,7 @@ import Result
 import Argo
 import Wrap
 
-class PostsViewModel {
+class DataModel {
     var posts: [Post]?
     var users: [Int : User]?
     
@@ -44,22 +44,37 @@ class PostsViewModel {
             switch result {
             case .failure(let error):
                 NSLog("Error loading users from network: \(error)")
-                self.users = self.userMap(from: loadCollection(from: LocalResource.users))
+                self.users = loadCollection(from: LocalResource.users).dictionary() { $0.id }
             case .success(let users):
-                self.users = self.userMap(from: users)
+                self.users = users.dictionary() { $0.id }
             }
             
             completion(self.users![post.userId])
         }
     }
     
-    func userMap(from users: [User]) -> [Int : User] {
-        var userMap = [Int: User]()
-        users.forEach {
-            userMap[$0.id] = $0
+    func loadComments(for postId: Int, completion: @escaping (_ comments: [Comment]) -> ()) {
+        guard var post = posts?.filter({ $0.id == postId }).first else {
+            completion([])
+            return
         }
-        
-        return userMap
+
+        guard case .none = post.comments else {
+            completion(post.comments!)
+            return
+        }
+
+        loadCollection(from: String(format: NetworkResource.comments, post.id)) { (result: Result<[Comment], NetworkError>) in
+            switch result {
+            case .failure(let error):
+                NSLog("Error loading comments from network: \(error)")
+                post.comments = []
+            case .success(let comments):
+                post.comments = comments
+            }
+            
+            completion(post.comments!)
+        }
     }
 }
 
