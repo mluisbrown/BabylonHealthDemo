@@ -1,5 +1,5 @@
 //
-//  PostsViewModelTests.swift
+//  DataModelTests.swift
 //  BabylonHealthDemo
 //
 //  Created by Michael Brown on 08/12/2016.
@@ -15,13 +15,9 @@ import Runes
 import Wrap
 @testable import BabylonHealthDemo
 
-extension Post: Serializable {
-    
-}
-
-extension User: Serializable {
-    
-}
+// Serializable protocol used by Kakapo for network mocking
+extension Post: Serializable {}
+extension User: Serializable {}
 
 
 class DataModelTests: QuickSpec {
@@ -124,7 +120,7 @@ class DataModelTests: QuickSpec {
                 
                 let dataModel = DataModel()
                 var user: User?
-                dataModel.loadUser(for: self.posts.first!) { aUser in
+                dataModel.loadUser(with: self.posts.first!.userId) { aUser in
                     user = aUser
                 }
                 

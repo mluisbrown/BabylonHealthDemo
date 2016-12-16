@@ -34,9 +34,9 @@ class DataModel {
         }
     }
     
-    func loadUser(for post: Post, completion: @escaping (_ user: User?) -> ()) {
+    func loadUser(with userId: Int, completion: @escaping (_ user: User?) -> ()) {
         guard case .none = users else {
-            completion(self.users![post.userId])
+            completion(self.users![userId])
             return
         }
         
@@ -49,7 +49,7 @@ class DataModel {
                 self.users = users.dictionary() { $0.id }
             }
             
-            completion(self.users![post.userId])
+            completion(self.users![userId])
         }
     }
     
@@ -74,6 +74,24 @@ class DataModel {
             }
             
             completion(post.comments!)
+        }
+    }
+    
+    func persist() {
+        if let posts = posts {
+            do {
+                try write(collection: posts, to: LocalResource.posts)
+            } catch {
+                NSLog("Error persisting posts \(error)")
+            }
+        }
+        
+        if let users = users {
+            do {
+                try write(collection: Array(users.values), to: LocalResource.users)
+            } catch {
+                NSLog("Error persisting users \(error)")
+            }
         }
     }
 }
