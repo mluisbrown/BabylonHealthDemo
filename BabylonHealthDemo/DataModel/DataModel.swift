@@ -54,11 +54,13 @@ class DataModel {
     }
     
     func loadComments(for postId: Int, completion: @escaping (_ comments: [Comment]) -> ()) {
-        guard var post = posts?.filter({ $0.id == postId }).first else {
+        guard let postInfo = posts?.enumerated().filter({ $0.element.id == postId} ).first else {
             completion([])
             return
         }
-
+        
+        let post = postInfo.element
+        
         guard case .none = post.comments else {
             completion(post.comments!)
             return
@@ -68,12 +70,12 @@ class DataModel {
             switch result {
             case .failure(let error):
                 NSLog("Error loading comments from network: \(error)")
-                post.comments = []
+                self.posts?[postInfo.offset].comments = []
             case .success(let comments):
-                post.comments = comments
+                self.posts?[postInfo.offset].comments = comments
             }
             
-            completion(post.comments!)
+            completion((self.posts?[postInfo.offset].comments)!)
         }
     }
     
