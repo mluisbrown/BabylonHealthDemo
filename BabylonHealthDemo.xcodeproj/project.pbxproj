@@ -9,18 +9,16 @@
 /* Begin PBXBuildFile section */
 		4C0602931DF76243000B8DFB /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0602921DF76243000B8DFB /* DataModel.swift */; };
 		4C0602951DF78315000B8DFB /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C0602941DF78315000B8DFB /* Result.framework */; };
-		4C1E39661DFDF0FE00183932 /* Wrap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1E39651DFDF0FE00183932 /* Wrap.framework */; };
 		4C1E39681DFDF13000183932 /* Kakapo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1E39671DFDF13000183932 /* Kakapo.framework */; };
 		4C1E39691DFDF14100183932 /* Kakapo.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C1E39671DFDF13000183932 /* Kakapo.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4C8EAE4C1DF8D583009A7559 /* Argo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8EAE491DF8D583009A7559 /* Argo.framework */; };
-		4C8EAE4D1DF8D583009A7559 /* Curry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8EAE4A1DF8D583009A7559 /* Curry.framework */; };
-		4C8EAE4E1DF8D583009A7559 /* Runes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8EAE4B1DF8D583009A7559 /* Runes.framework */; };
 		4C8EAE501DF8DD1C009A7559 /* DataModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8EAE4F1DF8DD1C009A7559 /* DataModelTests.swift */; };
 		4C9059921E01E7E400C7F793 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9059911E01E7E400C7F793 /* Collection.swift */; };
+		4C92ABEC1F4A3F980040039A /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CFC8E561F49EBFF009EF5DA /* ReactiveSwift.framework */; };
+		4C92ABED1F4A3FA50040039A /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C0602941DF78315000B8DFB /* Result.framework */; };
+		4C92ABEE1F4A3FB50040039A /* ReactiveSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CFC8E561F49EBFF009EF5DA /* ReactiveSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4C92ABEF1F4A3FBC0040039A /* Result.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C0602941DF78315000B8DFB /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CAADFD11E0186FB00218D6F /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAADFD01E0186FB00218D6F /* Network.swift */; };
 		4CAADFD41E0194AC00218D6F /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAADFD31E0194AC00218D6F /* Persistence.swift */; };
-		4CAADFD51E01A20B00218D6F /* Argo.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C8EAE491DF8D583009A7559 /* Argo.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4CAADFD61E01A20B00218D6F /* Runes.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C8EAE4B1DF8D583009A7559 /* Runes.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CAF18291DF600C500C20F07 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF18281DF600C500C20F07 /* AppDelegate.swift */; };
 		4CAF182E1DF600C500C20F07 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CAF182C1DF600C500C20F07 /* Main.storyboard */; };
 		4CAF18301DF600C500C20F07 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CAF182F1DF600C500C20F07 /* Assets.xcassets */; };
@@ -32,11 +30,15 @@
 		4CAF18541DF6110600C20F07 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF18531DF6110600C20F07 /* Post.swift */; };
 		4CAF18561DF611C000C20F07 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF18551DF611C000C20F07 /* User.swift */; };
 		4CAF18581DF6171900C20F07 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF18571DF6171900C20F07 /* Comment.swift */; };
-		4CC6815D1E02BBCC00E00915 /* Wrap.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C1E39651DFDF0FE00183932 /* Wrap.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CD3F86A1E03206800834242 /* PostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD3F8691E03206800834242 /* PostsViewModel.swift */; };
 		4CD3F86C1E033E6A00834242 /* PostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD3F86B1E033E6A00834242 /* PostsViewController.swift */; };
 		4CD3F86F1E035A1300834242 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD3F86E1E035A1300834242 /* PostDetailViewController.swift */; };
 		4CD3F8711E035FF800834242 /* PostDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD3F8701E035FF800834242 /* PostDetailViewModel.swift */; };
+		4CFA4C311F49F3860050A5C6 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFA4C301F49F3860050A5C6 /* Error.swift */; };
+		4CFA4C331F49F5AC0050A5C6 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFA4C321F49F5AC0050A5C6 /* Resource.swift */; };
+		4CFC8E551F49D1AD009EF5DA /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFC8E541F49D1AD009EF5DA /* ModelTests.swift */; };
+		4CFC8E581F49EBFF009EF5DA /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CFC8E561F49EBFF009EF5DA /* ReactiveSwift.framework */; };
+		4CFC8E591F49EBFF009EF5DA /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CFC8E571F49EBFF009EF5DA /* ReactiveCocoa.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,9 +58,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4CC6815D1E02BBCC00E00915 /* Wrap.framework in CopyFiles */,
-				4CAADFD51E01A20B00218D6F /* Argo.framework in CopyFiles */,
-				4CAADFD61E01A20B00218D6F /* Runes.framework in CopyFiles */,
+				4C92ABEF1F4A3FBC0040039A /* Result.framework in CopyFiles */,
+				4C92ABEE1F4A3FB50040039A /* ReactiveSwift.framework in CopyFiles */,
 				4C1E39691DFDF14100183932 /* Kakapo.framework in CopyFiles */,
 				4CAF184E1DF6087D00C20F07 /* Nimble.framework in CopyFiles */,
 				4CAF184F1DF6087D00C20F07 /* Quick.framework in CopyFiles */,
@@ -70,11 +71,7 @@
 /* Begin PBXFileReference section */
 		4C0602921DF76243000B8DFB /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		4C0602941DF78315000B8DFB /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
-		4C1E39651DFDF0FE00183932 /* Wrap.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Wrap.framework; path = Carthage/Build/iOS/Wrap.framework; sourceTree = "<group>"; };
 		4C1E39671DFDF13000183932 /* Kakapo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kakapo.framework; path = Carthage/Build/iOS/Kakapo.framework; sourceTree = "<group>"; };
-		4C8EAE491DF8D583009A7559 /* Argo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Argo.framework; path = Carthage/Build/iOS/Argo.framework; sourceTree = "<group>"; };
-		4C8EAE4A1DF8D583009A7559 /* Curry.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Curry.framework; path = Carthage/Build/iOS/Curry.framework; sourceTree = "<group>"; };
-		4C8EAE4B1DF8D583009A7559 /* Runes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Runes.framework; path = Carthage/Build/iOS/Runes.framework; sourceTree = "<group>"; };
 		4C8EAE4F1DF8DD1C009A7559 /* DataModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModelTests.swift; sourceTree = "<group>"; };
 		4C9059911E01E7E400C7F793 /* Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		4CAADFD01E0186FB00218D6F /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
@@ -96,6 +93,11 @@
 		4CD3F86B1E033E6A00834242 /* PostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostsViewController.swift; sourceTree = "<group>"; };
 		4CD3F86E1E035A1300834242 /* PostDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
 		4CD3F8701E035FF800834242 /* PostDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailViewModel.swift; sourceTree = "<group>"; };
+		4CFA4C301F49F3860050A5C6 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		4CFA4C321F49F5AC0050A5C6 /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
+		4CFC8E541F49D1AD009EF5DA /* ModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
+		4CFC8E561F49EBFF009EF5DA /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = Carthage/Build/iOS/ReactiveSwift.framework; sourceTree = "<group>"; };
+		4CFC8E571F49EBFF009EF5DA /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,11 +105,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CFC8E581F49EBFF009EF5DA /* ReactiveSwift.framework in Frameworks */,
+				4CFC8E591F49EBFF009EF5DA /* ReactiveCocoa.framework in Frameworks */,
 				4C0602951DF78315000B8DFB /* Result.framework in Frameworks */,
-				4C8EAE4C1DF8D583009A7559 /* Argo.framework in Frameworks */,
-				4C8EAE4D1DF8D583009A7559 /* Curry.framework in Frameworks */,
-				4C8EAE4E1DF8D583009A7559 /* Runes.framework in Frameworks */,
-				4C1E39661DFDF0FE00183932 /* Wrap.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,6 +115,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C92ABED1F4A3FA50040039A /* Result.framework in Frameworks */,
+				4C92ABEC1F4A3F980040039A /* ReactiveSwift.framework in Frameworks */,
 				4CAF184B1DF6082700C20F07 /* Nimble.framework in Frameworks */,
 				4CAF184C1DF6082700C20F07 /* Quick.framework in Frameworks */,
 				4C1E39681DFDF13000183932 /* Kakapo.framework in Frameworks */,
@@ -163,11 +165,11 @@
 		4CAF18271DF600C500C20F07 /* BabylonHealthDemo */ = {
 			isa = PBXGroup;
 			children = (
+				4C0602911DF7622F000B8DFB /* PostsView */,
 				4CD3F86D1E0359EB00834242 /* PostDetailView */,
+				4CAF18521DF610EB00C20F07 /* Models */,
 				4CC6815E1E02CDEA00E00915 /* DataModel */,
 				4C9059901E01E7D300C7F793 /* Extensions */,
-				4C0602911DF7622F000B8DFB /* PostsView */,
-				4CAF18521DF610EB00C20F07 /* Models */,
 				4CAF18281DF600C500C20F07 /* AppDelegate.swift */,
 				4CAF182C1DF600C500C20F07 /* Main.storyboard */,
 				4CAF182F1DF600C500C20F07 /* Assets.xcassets */,
@@ -181,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				4C8EAE4F1DF8DD1C009A7559 /* DataModelTests.swift */,
+				4CFC8E541F49D1AD009EF5DA /* ModelTests.swift */,
 				4CAF183F1DF600C500C20F07 /* Info.plist */,
 			);
 			path = BabylonHealthDemoTests;
@@ -189,11 +192,9 @@
 		4CAF18481DF6082600C20F07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4CFC8E571F49EBFF009EF5DA /* ReactiveCocoa.framework */,
+				4CFC8E561F49EBFF009EF5DA /* ReactiveSwift.framework */,
 				4C1E39671DFDF13000183932 /* Kakapo.framework */,
-				4C1E39651DFDF0FE00183932 /* Wrap.framework */,
-				4C8EAE491DF8D583009A7559 /* Argo.framework */,
-				4C8EAE4A1DF8D583009A7559 /* Curry.framework */,
-				4C8EAE4B1DF8D583009A7559 /* Runes.framework */,
 				4C0602941DF78315000B8DFB /* Result.framework */,
 				4CAF18491DF6082700C20F07 /* Nimble.framework */,
 				4CAF184A1DF6082700C20F07 /* Quick.framework */,
@@ -217,6 +218,8 @@
 				4C0602921DF76243000B8DFB /* DataModel.swift */,
 				4CAADFD31E0194AC00218D6F /* Persistence.swift */,
 				4CAADFD01E0186FB00218D6F /* Network.swift */,
+				4CFA4C301F49F3860050A5C6 /* Error.swift */,
+				4CFA4C321F49F5AC0050A5C6 /* Resource.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -277,7 +280,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Michael Brown";
 				TargetAttributes = {
 					4CAF18241DF600C400C20F07 = {
@@ -340,10 +343,8 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Argo.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Curry.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Wrap.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Runes.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ReactiveSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ReactiveCocoa.framework",
 			);
 			outputPaths = (
 			);
@@ -361,6 +362,7 @@
 				4C9059921E01E7E400C7F793 /* Collection.swift in Sources */,
 				4CAF18581DF6171900C20F07 /* Comment.swift in Sources */,
 				4CAADFD41E0194AC00218D6F /* Persistence.swift in Sources */,
+				4CFA4C311F49F3860050A5C6 /* Error.swift in Sources */,
 				4CD3F86F1E035A1300834242 /* PostDetailViewController.swift in Sources */,
 				4CAF18561DF611C000C20F07 /* User.swift in Sources */,
 				4CD3F8711E035FF800834242 /* PostDetailViewModel.swift in Sources */,
@@ -370,6 +372,7 @@
 				4CD3F86A1E03206800834242 /* PostsViewModel.swift in Sources */,
 				4CAADFD11E0186FB00218D6F /* Network.swift in Sources */,
 				4CAF18291DF600C500C20F07 /* AppDelegate.swift in Sources */,
+				4CFA4C331F49F5AC0050A5C6 /* Resource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,6 +381,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C8EAE501DF8DD1C009A7559 /* DataModelTests.swift in Sources */,
+				4CFC8E551F49D1AD009EF5DA /* ModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,7 +424,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -428,7 +434,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -472,7 +482,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -480,7 +492,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;

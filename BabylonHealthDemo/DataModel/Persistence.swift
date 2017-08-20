@@ -7,8 +7,7 @@
 //
 
 import Foundation
-import Argo
-import Wrap
+import Result
 
 struct LocalResource {
     static let users = documentURL(with: "users.json")
@@ -23,27 +22,24 @@ struct LocalResource {
     }
 }
 
-func loadCollection<T: Decodable>(from localURL: URL) -> [T] where T == T.DecodedType {
-    guard let data = try? Data(contentsOf: localURL) else {
-        return []
-    }
-    
-    do {
-        let decoded: Argo.Decoded<[T]> = try parseArray(from: data)
-        switch decoded {
-        case .success(let collection):
-            return collection
-        case .failure:
-            return []
-        }
-    } catch {
-        return []
-    }
-}
+//func loadCollection<T: Decodable>(from localURL: URL) -> [T] {
+//    guard let data = try? Data(contentsOf: localURL) else {
+//        return []
+//    }
+//    
+//    let decoded: Result<[T], NetworkError> = parseArray(from: data)
+//    
+//    switch decoded {
+//    case .success(let collection):
+//        return collection
+//    case .failure:
+//        return []
+//    }
+//}
 
-func write<T>(collection: [T], to localURL: URL) throws {
+func write<T: Encodable>(collection: [T], to localURL: URL) throws {
     do {
-        let data: Data = try wrap(collection)
+        let data: Data = try JSONEncoder().encode(collection)
         try data.write(to: localURL, options: .atomic)
     }
     catch {

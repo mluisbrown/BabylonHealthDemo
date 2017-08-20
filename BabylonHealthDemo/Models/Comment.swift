@@ -7,25 +7,11 @@
 //
 
 import Foundation
-import Argo
-import Curry
-import Runes
 
-struct Comment {
+struct Comment: Codable {
     let id: Int
     let postId: Int
     let name: String
     let email: String
     let body: String
-}
-
-extension Comment: Decodable {
-    static func decode(_ j: JSON) -> Decoded<Comment> {
-        return curry(Comment.init)
-            <^> j <| "id"
-            <*> j <| "postId"
-            <*> j <| "name"
-            <*> j <| "email"
-            <*> j <| "body"
-    }
 }

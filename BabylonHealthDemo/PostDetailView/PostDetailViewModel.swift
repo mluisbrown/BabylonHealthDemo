@@ -7,36 +7,37 @@
 //
 
 import Foundation
+import ReactiveSwift
 
-typealias PostDetailBinding = (_ userName: String, _ postBody: String, _ commentCount: String) -> Void
-
-class PostDetailViewModel {
+struct PostDetailViewModel {
     let dataModel: DataModel
     let post: Post
     
-    var user: User?
-    var comments: [Comment]?
+    let userName = MutableProperty("")
+    let commentCount = MutableProperty("")
     
     init(dataModel: DataModel, post: Post) {
         self.dataModel = dataModel
         self.post = post
+        
+        createBindings()
     }
     
-    func loadDetails(completion: @escaping PostDetailBinding) {
-        dataModel.loadUser(with: post.userId) { user in
-            self.user = user
-            
-            DispatchQueue.main.async {
-                completion(self.user?.name ?? "", self.post.body, "\(self.comments?.count ?? 0)")
-            }
-        }
+    private func createBindings() {
+        dataModel.user.signal
+            .skipNil()
+            .observeValues { user in
+                self.userName.value = user.name
+        }        
         
-        dataModel.loadComments(for: post.id) { comments in
-            self.comments = comments
-
-            DispatchQueue.main.async {
-                completion(self.user?.name ?? "", self.post.body, "\(self.comments?.count ?? 0)")
-            }
+        dataModel.comments.signal
+            .observeValues { comments in
+                self.commentCount.value = String(comments.count)
         }
+    }
+    
+    func loadDetails() {
+        dataModel.loadUser(with: post.userId)         
+        dataModel.loadComments(for: post.id) 
     }    
 }

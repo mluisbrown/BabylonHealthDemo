@@ -1,6 +1,2 @@
 github "antitypical/Result"
-github "thoughtbot/Runes"
-github "thoughtbot/Argo"
-github "thoughtbot/Curry"
-github "johnsundell/wrap"
-
+github "ReactiveCocoa/ReactiveCocoa"

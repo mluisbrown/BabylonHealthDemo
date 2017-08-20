@@ -8,17 +8,8 @@
 
 import Foundation
 import Result
-import Argo
+import ReactiveSwift
 
-enum HTTPStatusCode: Int {
-    case ok = 200
-}
-
-enum NetworkError: Error {
-    case noData
-    case badRequest(String)
-    case jsonParsing(String)
-}
 
 struct NetworkResource {
     private init() {}
@@ -27,43 +18,59 @@ struct NetworkResource {
     static let comments = "https://jsonplaceholder.typicode.com/comments?postId=%d"
 }
 
+typealias Response = SignalProducer<(Data, URLResponse), DataError>
 
-func loadCollection<T: Decodable>(from urlString: String, completion: @escaping (Result<[T], NetworkError>) -> ())
-    where T == T.DecodedType {
+class Network {
+    let session: URLSession
+    let baseURL: URL
+    
+    init(session: URLSession = URLSession(configuration: URLSessionConfiguration.default), baseURL: URL) {
+        self.session = session
+        self.baseURL = baseURL
+    }
+ 
+    func makeRequest(_ resource: Resource) -> Response {
+        let request = resource.toRequest(self.baseURL)
         
-        URLSession.shared.dataTask(with: URL(string: urlString)!) { data, response, error in
-            guard case .none = error else {
-                completion(.failure(.badRequest(error!.localizedDescription)))
-                return
-            }
-            
-            if let data = data,
-                let response = response as? HTTPURLResponse,
-                response.statusCode == HTTPStatusCode.ok.rawValue {
-                
-                do {
-                    let decoded: Argo.Decoded<[T]> = try parseArray(from: data)
-                    switch decoded {
-                    case .success(let collection):
-                        completion(.success(collection))
-                    case .failure(let error):
-                        completion(.failure(.jsonParsing(error.localizedDescription)))
-                    }
-                } catch {
-                    completion(.failure(.jsonParsing(error.localizedDescription)))
-                }
-            }
-            else {
-                completion(.failure(.noData))
-            }
-        }.resume()
+        return self.session.reactive
+            .data(with: request)
+            .mapError { DataError.network($0.localizedDescription) }        
+            .start(on: QueueScheduler(name: "Network"))            
+    }
+    
+    deinit {
+        self.session.invalidateAndCancel()
+    }
 }
 
-func parseArray<T: Decodable>(from data: Data) throws -> Argo.Decoded<[T]> where T == T.DecodedType {
-    do {
-        let json = try JSONSerialization.jsonObject(with: data)
-        return decode(json)
-    } catch {
-        throw error
-    }
-}    
+
+//func loadCollection<T: Decodable>(from urlString: String, completion: @escaping (Result<[T], NetworkError>) -> ()) {
+//        
+//        URLSession.shared.dataTask(with: URL(string: urlString)!) { data, response, error in
+//            guard case .none = error else {
+//                completion(.failure(.badRequest(error!.localizedDescription)))
+//                return
+//            }
+//            
+//            if let data = data,
+//                let response = response as? HTTPURLResponse,
+//                response.statusCode == HTTPStatusCode.ok.rawValue {
+//
+//                let decoded: Result<[T], NetworkError> = parseArray(from: data)
+//                completion(decoded)
+//            }
+//            else {
+//                completion(.failure(.noData))
+//            }
+//        }.resume()
+//}
+//
+//func parseArray<T: Decodable>(from data: Data) -> Result<[T], NetworkError> {
+//    do {
+//        let json:[T] = try JSONDecoder().decode([T].self, from: data)
+//        return .success(json)
+//    } catch {
+//        return .failure(.jsonParsing(error.localizedDescription))
+//    }
+//}    
+

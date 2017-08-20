@@ -8,92 +8,95 @@
 
 import Foundation
 import Result
-import Argo
-import Wrap
+import ReactiveSwift
 
-class DataModel {
-    var posts: [Post]?
-    var users: [Int : User]?
+struct DataModel {
+    let posts = MutableProperty([Post]())
+    let users = MutableProperty([Int : User]())
+    let user = MutableProperty<User?>(nil)
+    let comments = MutableProperty([Comment]())
     
-    func loadPosts(completion: @escaping (_ posts: [Post]) -> ()) {
-        guard case .none = posts else {
-            completion(self.posts!)
-            return
-        }
-        
-        loadCollection(from: NetworkResource.posts) { (result: Result<[Post], NetworkError>) in
-            switch result {
-            case .failure(let error):
-                NSLog("Error loading posts from network: \(error)")
-                self.posts = loadCollection(from: LocalResource.posts)
-            case .success(let posts):
-                self.posts = posts
+    let network: Network
+    
+    init(network: Network) {
+        self.network = network
+    }
+    
+    func loadPosts() {
+        let resource = Resource(path: "/posts", method: .GET)
+        posts <~ network.makeRequest(resource).map { (value) -> [Post] in            
+            let (data, _) = value
+            do {
+                return try JSONDecoder().decode([Post].self, from: data)
+            } catch {
+                return []
             }
-            
-            completion(self.posts!)
+        }.flatMapError { _ in
+            SignalProducer<[Post], NoError>.empty
         }
     }
     
-    func loadUser(with userId: Int, completion: @escaping (_ user: User?) -> ()) {
-        guard case .none = users else {
-            completion(self.users![userId])
+    func loadUser(with userId: Int) {
+        guard users.value.count == 0 else {
+            user.value = users.value[userId]
             return
         }
-        
-        loadCollection(from: NetworkResource.users) { (result: Result<[User], NetworkError>) in
-            switch result {
-            case .failure(let error):
-                NSLog("Error loading users from network: \(error)")
-                self.users = loadCollection(from: LocalResource.users).dictionary() { $0.id }
-            case .success(let users):
-                self.users = users.dictionary() { $0.id }
+
+        let resource = Resource(path: "/users", method: .GET)
+        network.makeRequest(resource).map { (value) -> [Int : User] in            
+            let (data, _) = value
+            do {
+                return try JSONDecoder().decode([User].self, from: data).dictionary() { $0.id }
+            } catch {
+                return [:]
             }
-            
-            completion(self.users![userId])
+        }.flatMapError { _ in
+            SignalProducer<[Int: User], NoError>.empty
+        }.startWithValues {
+            self.users.value = $0
+            self.user.value = self.users.value[userId]
         }
     }
     
-    func loadComments(for postId: Int, completion: @escaping (_ comments: [Comment]) -> ()) {
-        guard let postInfo = posts?.enumerated().filter({ $0.element.id == postId} ).first else {
-            completion([])
+    func loadComments(for postId: Int) {
+        guard let postInfo = posts.value.enumerated().filter({ $0.element.id == postId} ).first else {
+            comments.value = []
             return
         }
         
         let post = postInfo.element
         
-        guard case .none = post.comments else {
-            completion(post.comments!)
+        if let postComments = post.comments {
+            comments.value = postComments
             return
         }
-
-        loadCollection(from: String(format: NetworkResource.comments, post.id)) { (result: Result<[Comment], NetworkError>) in
-            switch result {
-            case .failure(let error):
-                NSLog("Error loading comments from network: \(error)")
-                self.posts?[postInfo.offset].comments = []
-            case .success(let comments):
-                self.posts?[postInfo.offset].comments = comments
-            }
-            
-            completion((self.posts?[postInfo.offset].comments)!)
+        
+        let resource = Resource(path: "/comments", method: .GET, query: ["postId" : String(post.id)])    
+        network.makeRequest(resource).map { (value) -> [Comment] in
+            let (data, _) = value
+            do {
+                return try JSONDecoder().decode([Comment].self, from: data)
+            } catch {
+                return []
+            }            
+        }.flatMapError { _ in
+                SignalProducer<[Comment], NoError>.empty
+        }.startWithValues {
+            self.comments.value = $0
+            self.posts.value[postInfo.offset].comments = $0
         }
     }
     
     func persist() {
-        if let posts = posts {
-            do {
-                try write(collection: posts, to: LocalResource.posts)
-            } catch {
-                NSLog("Error persisting posts \(error)")
-            }
+        do {
+            try write(collection: posts.value, to: LocalResource.posts)
+        } catch {
+            NSLog("Error persisting posts \(error)")
         }
-        
-        if let users = users {
-            do {
-                try write(collection: Array(users.values), to: LocalResource.users)
-            } catch {
-                NSLog("Error persisting users \(error)")
-            }
+        do {
+            try write(collection: Array(users.value.values), to: LocalResource.users)
+        } catch {
+            NSLog("Error persisting users \(error)")
         }
     }
 }

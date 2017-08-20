@@ -7,19 +7,13 @@
 //
 
 import Foundation
-import Argo
-import Curry
-import Runes
 
-struct User {
+struct User: Codable {
     let id: Int
     let name: String
-}
-
-extension User: Decodable {
-    static func decode(_ j: JSON) -> Decoded<User> {
-        return curry(User.init)
-            <^> j <| "id"
-            <*> j <| "name"
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
     }
 }

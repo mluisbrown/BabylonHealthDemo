@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import ReactiveSwift
+import ReactiveCocoa
 
 class PostDetailViewController: UIViewController {
 
@@ -14,19 +16,23 @@ class PostDetailViewController: UIViewController {
     @IBOutlet weak var bodyLabel: UILabel!
     @IBOutlet weak var commentCountLabel: UILabel!
     
-    var viewModel: PostDetailViewModel?
+    var viewModel: PostDetailViewModel!
     
     func prepare(dataModel: DataModel, post: Post) {
-        viewModel = PostDetailViewModel(dataModel: dataModel, post: post)
+        viewModel = PostDetailViewModel(dataModel: dataModel, post: post)        
     }
     
     override func viewDidLoad() {
+        guard let _ = viewModel else {
+            fatalError("viewModel not initialized.")
+        }
+        
         super.viewDidLoad()
         
-        viewModel?.loadDetails() { (userName, postBody, commentCount) in
-            self.authorLabel.text = userName
-            self.bodyLabel.text = postBody
-            self.commentCountLabel.text = commentCount
-        }
+        bodyLabel.text = viewModel.post.body
+        authorLabel.reactive.text <~ viewModel.userName
+        commentCountLabel.reactive.text <~ viewModel.commentCount
+
+        viewModel.loadDetails()
     }
 }
