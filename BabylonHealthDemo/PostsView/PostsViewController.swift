@@ -9,7 +9,7 @@
 import UIKit
 import ReactiveSwift
 
-class PostsViewController: UITableViewController {
+class PostsViewController: UITableViewController, ErrorAlertPresentable {
     let postCellIdentifier = "postCell"
     
     var dataModel: DataModel!
@@ -69,14 +69,6 @@ class PostsViewController: UITableViewController {
         detailVC.prepare(dataModel: dataModel, post: post)
     }
 
-    private func showErrorAlert(withMsg msg: String) {
-        let alertVC = UIAlertController(title: "Error", message: msg, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alertVC.addAction(okAction)
-        
-        present(alertVC, animated: true, completion: nil)
-    }
-    
     func persistDataModel() {
         dataModel.persist()
     }

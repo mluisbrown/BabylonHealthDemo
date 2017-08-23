@@ -11,6 +11,7 @@
 		4C0602951DF78315000B8DFB /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C0602941DF78315000B8DFB /* Result.framework */; };
 		4C1E39681DFDF13000183932 /* Kakapo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1E39671DFDF13000183932 /* Kakapo.framework */; };
 		4C1E39691DFDF14100183932 /* Kakapo.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C1E39671DFDF13000183932 /* Kakapo.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4C83F00F1F4D0F230008F063 /* ErrorAlertPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C83F00E1F4D0F230008F063 /* ErrorAlertPresentable.swift */; };
 		4C8EAE501DF8DD1C009A7559 /* DataModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8EAE4F1DF8DD1C009A7559 /* DataModelTests.swift */; };
 		4C9059921E01E7E400C7F793 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9059911E01E7E400C7F793 /* Collection.swift */; };
 		4C92ABEC1F4A3F980040039A /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CFC8E561F49EBFF009EF5DA /* ReactiveSwift.framework */; };
@@ -73,6 +74,7 @@
 		4C0602921DF76243000B8DFB /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		4C0602941DF78315000B8DFB /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 		4C1E39671DFDF13000183932 /* Kakapo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kakapo.framework; path = Carthage/Build/iOS/Kakapo.framework; sourceTree = "<group>"; };
+		4C83F00E1F4D0F230008F063 /* ErrorAlertPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlertPresentable.swift; sourceTree = "<group>"; };
 		4C8EAE4F1DF8DD1C009A7559 /* DataModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModelTests.swift; sourceTree = "<group>"; };
 		4C9059911E01E7E400C7F793 /* Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		4C99F5A51F4C553E001C7D98 /* Pipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pipe.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 			children = (
 				4C9059911E01E7E400C7F793 /* Collection.swift */,
 				4C99F5A51F4C553E001C7D98 /* Pipe.swift */,
+				4C83F00E1F4D0F230008F063 /* ErrorAlertPresentable.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -375,6 +378,7 @@
 				4CAF18541DF6110600C20F07 /* Post.swift in Sources */,
 				4CD3F86A1E03206800834242 /* PostsViewModel.swift in Sources */,
 				4CAADFD11E0186FB00218D6F /* Network.swift in Sources */,
+				4C83F00F1F4D0F230008F063 /* ErrorAlertPresentable.swift in Sources */,
 				4CAF18291DF600C500C20F07 /* AppDelegate.swift in Sources */,
 				4CFA4C331F49F5AC0050A5C6 /* Resource.swift in Sources */,
 			);

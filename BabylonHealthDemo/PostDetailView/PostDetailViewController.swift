@@ -10,7 +10,7 @@ import UIKit
 import ReactiveSwift
 import ReactiveCocoa
 
-class PostDetailViewController: UIViewController {
+class PostDetailViewController: UIViewController, ErrorAlertPresentable {
 
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var bodyLabel: UILabel!
@@ -49,13 +49,5 @@ class PostDetailViewController: UIViewController {
             .observeValues{ [weak self] msg in
                 self?.navigationItem.prompt = msg
         }
-    }
-    
-    private func showErrorAlert(withMsg msg: String) {
-        let alertVC = UIAlertController(title: "Error", message: msg, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alertVC.addAction(okAction)
-        
-        present(alertVC, animated: true, completion: nil)
     }    
 }
