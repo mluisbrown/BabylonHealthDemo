@@ -33,15 +33,31 @@ class PostsViewController: UITableViewController {
                                                name: .UIApplicationWillResignActive, object: nil)
         
         tableView.dataSource = viewModel
+        
+        bindToModel()
+        viewModel.loadPosts()
+    }
+    
+    private func bindToModel() {
         viewModel.posts.signal
             .observe(on: UIScheduler())
             .observeValues { [weak self] _ in
-            self?.tableView.reloadData()
+                self?.tableView.reloadData()
         }
         
-        viewModel.loadPosts()
+        viewModel.errorMessage.signal
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] errorText in
+                self?.showErrorAlert(withMsg: errorText)
+        }
+        
+        viewModel.networkWarningText.signal
+            .observe(on: UIScheduler())
+            .observeValues{ [weak self] msg in
+                self?.navigationItem.prompt = msg
+        }        
     }
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let cell = sender as? UITableViewCell,
             let indexPath = tableView.indexPath(for: cell),
@@ -51,6 +67,14 @@ class PostsViewController: UITableViewController {
         }
         
         detailVC.prepare(dataModel: dataModel, post: post)
+    }
+
+    private func showErrorAlert(withMsg msg: String) {
+        let alertVC = UIAlertController(title: "Error", message: msg, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertVC.addAction(okAction)
+        
+        present(alertVC, animated: true, completion: nil)
     }
     
     func persistDataModel() {

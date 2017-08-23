@@ -8,6 +8,7 @@
 
 import Foundation
 import Result
+import ReactiveSwift
 
 struct LocalResource {
     static let users = documentURL(with: "users.json")
@@ -22,20 +23,18 @@ struct LocalResource {
     }
 }
 
-//func loadCollection<T: Decodable>(from localURL: URL) -> [T] {
-//    guard let data = try? Data(contentsOf: localURL) else {
-//        return []
-//    }
-//    
-//    let decoded: Result<[T], NetworkError> = parseArray(from: data)
-//    
-//    switch decoded {
-//    case .success(let collection):
-//        return collection
-//    case .failure:
-//        return []
-//    }
-//}
+func read(from localURL: URL) -> SignalProducer<Data, DataError> {
+    return SignalProducer<Data, DataError> { observer, _ in
+        do {
+            let data = try Data(contentsOf: localURL)
+            observer.send(value: data)
+            observer.sendCompleted()
+        } catch {
+            observer.send(error: DataError.persistence(error.localizedDescription))
+            observer.sendCompleted()
+        }
+    } 
+}
 
 func write<T: Encodable>(collection: [T], to localURL: URL) throws {
     do {

@@ -11,17 +11,6 @@ import Quick
 import Nimble
 @testable import BabylonHealthDemo
 
-private func decodingError(_ error: Error) -> String {
-    switch error {
-    case DecodingError.dataCorrupted(let context), 
-         DecodingError.keyNotFound(_, let context), 
-         DecodingError.typeMismatch(_, let context):
-        return context.debugDescription
-    default:
-        return error.localizedDescription
-    }
-}
-
 class ModelTests: QuickSpec {
     let postsData = 
     """
@@ -74,7 +63,7 @@ class ModelTests: QuickSpec {
                     expect(posts).toNot(beNil())
                     expect(posts.count).to(equal(2))
                 } catch {
-                    fail(decodingError(error))
+                    fail(error |> decodingErrorDescription)
                 }
             }
             
@@ -84,7 +73,7 @@ class ModelTests: QuickSpec {
                     expect(users).toNot(beNil())
                     expect(users.count).to(equal(2))
                 } catch {
-                    fail(decodingError(error))
+                    fail(error |> decodingErrorDescription)
                 }
             }
         }

@@ -29,10 +29,33 @@ class PostDetailViewController: UIViewController {
         
         super.viewDidLoad()
         
+        bindToModel()
+        viewModel.loadDetails()
+    }
+    
+    private func bindToModel() {
         bodyLabel.text = viewModel.post.body
         authorLabel.reactive.text <~ viewModel.userName
         commentCountLabel.reactive.text <~ viewModel.commentCount
-
-        viewModel.loadDetails()
+        
+        viewModel.errorMessage.signal
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] errorText in
+                self?.showErrorAlert(withMsg: errorText)
+        }
+        
+        viewModel.networkWarningText.signal
+            .observe(on: UIScheduler())
+            .observeValues{ [weak self] msg in
+                self?.navigationItem.prompt = msg
+        }
     }
+    
+    private func showErrorAlert(withMsg msg: String) {
+        let alertVC = UIAlertController(title: "Error", message: msg, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertVC.addAction(okAction)
+        
+        present(alertVC, animated: true, completion: nil)
+    }    
 }

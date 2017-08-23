@@ -43,15 +43,22 @@ class DataModelTests: QuickSpec {
                 expect(threw).to(beFalse())
             }
 
-//            it("reads posts from local storage") {
-//                try? FileManager.default.removeItem(at: LocalResource.posts)
-//                
-//                let postsFromStorage: [Post]
-//                try? write(collection: self.posts, to: LocalResource.posts)
-//                postsFromStorage = loadCollection(from: LocalResource.posts)
-//                
-//                expect(postsFromStorage.count).to(equal(2))
-//            }
+            it("reads posts from local storage") {
+                try? FileManager.default.removeItem(at: LocalResource.posts)
+                
+                var postsFromStorage: [Post] = []
+                try? write(collection: self.posts, to: LocalResource.posts)
+                read(from: LocalResource.posts).startWithResult {
+                    switch $0 {
+                    case .success(let data):
+                        postsFromStorage = try! JSONDecoder().decode([Post].self, from: data)
+                    case .failure(let error):
+                        fail("read posts failed: \(error.localizedDescription)")
+                    }
+                }
+                
+                expect(postsFromStorage.count).toEventually(equal(2))
+            }
             
             it("writes users to local storage") {
                 try? FileManager.default.removeItem(at: LocalResource.users)
@@ -66,15 +73,22 @@ class DataModelTests: QuickSpec {
                 expect(threw).to(beFalse())
             }
 
-//            it("reads users from local storage") {
-//                try? FileManager.default.removeItem(at: LocalResource.users)
-//                
-//                let usersFromStorage: [User]
-//                try? write(collection: self.users, to: LocalResource.users)
-//                usersFromStorage = loadCollection(from: LocalResource.users)
-//                
-//                expect(usersFromStorage.count).to(equal(2))
-//            }
+            it("reads users from local storage") {
+                try? FileManager.default.removeItem(at: LocalResource.users)
+                
+                var usersFromStorage: [User] = []
+                try? write(collection: self.users, to: LocalResource.users)
+                read(from: LocalResource.users).startWithResult {
+                    switch $0 {
+                    case .success(let data):
+                        usersFromStorage = try! JSONDecoder().decode([User].self, from: data)
+                    case .failure(let error):
+                        fail("read users failed: \(error.localizedDescription)")
+                    }
+                }
+                
+                expect(usersFromStorage.count).toEventually(equal(2))
+            }
             
         }
         
@@ -93,8 +107,14 @@ class DataModelTests: QuickSpec {
 
                 let dataModel = DataModel(network: Network(session: URLSession.shared, baseURL: URL(string: baseURL)!))
                 let loadedPosts = MutableProperty([Post]())
-                loadedPosts <~ dataModel.posts
-                dataModel.loadPosts() 
+                dataModel.loadPosts().startWithResult {
+                    switch $0 {
+                    case .success(let posts):
+                        loadedPosts.value = posts
+                    case .failure(let error):
+                        fail("loadPosts failed: \(error.localizedDescription)")
+                    }                    
+                }
                 
                 expect(loadedPosts.value.count).toEventually(equal(2))
             }
@@ -104,8 +124,15 @@ class DataModelTests: QuickSpec {
                 
                 let dataModel = DataModel(network: Network(session: URLSession.shared, baseURL: URL(string: baseURL)!))
                 let loadedUser = MutableProperty<User?>(nil)
-                loadedUser <~ dataModel.user
-                dataModel.loadUser(with: self.posts.first!.userId)
+
+                dataModel.loadUsers().startWithResult {
+                    switch $0 {
+                    case .success(let users):
+                        loadedUser.value = users[self.posts.first!.userId]
+                    case .failure(let error):
+                        fail("loadUsers failed: \(error.localizedDescription)")
+                    }
+                }
                 
                 expect(loadedUser).toEventuallyNot(beNil())
                 expect(loadedUser.value?.id).toEventually(equal(1))

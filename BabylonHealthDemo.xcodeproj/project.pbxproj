@@ -17,6 +17,7 @@
 		4C92ABED1F4A3FA50040039A /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C0602941DF78315000B8DFB /* Result.framework */; };
 		4C92ABEE1F4A3FB50040039A /* ReactiveSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CFC8E561F49EBFF009EF5DA /* ReactiveSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C92ABEF1F4A3FBC0040039A /* Result.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C0602941DF78315000B8DFB /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4C99F5A61F4C553E001C7D98 /* Pipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C99F5A51F4C553E001C7D98 /* Pipe.swift */; };
 		4CAADFD11E0186FB00218D6F /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAADFD01E0186FB00218D6F /* Network.swift */; };
 		4CAADFD41E0194AC00218D6F /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAADFD31E0194AC00218D6F /* Persistence.swift */; };
 		4CAF18291DF600C500C20F07 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF18281DF600C500C20F07 /* AppDelegate.swift */; };
@@ -74,6 +75,7 @@
 		4C1E39671DFDF13000183932 /* Kakapo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kakapo.framework; path = Carthage/Build/iOS/Kakapo.framework; sourceTree = "<group>"; };
 		4C8EAE4F1DF8DD1C009A7559 /* DataModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModelTests.swift; sourceTree = "<group>"; };
 		4C9059911E01E7E400C7F793 /* Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
+		4C99F5A51F4C553E001C7D98 /* Pipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pipe.swift; sourceTree = "<group>"; };
 		4CAADFD01E0186FB00218D6F /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		4CAADFD31E0194AC00218D6F /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		4CAF18251DF600C500C20F07 /* BabylonHealthDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BabylonHealthDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -139,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				4C9059911E01E7E400C7F793 /* Collection.swift */,
+				4C99F5A51F4C553E001C7D98 /* Pipe.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -227,8 +230,8 @@
 		4CD3F86D1E0359EB00834242 /* PostDetailView */ = {
 			isa = PBXGroup;
 			children = (
-				4CD3F86E1E035A1300834242 /* PostDetailViewController.swift */,
 				4CD3F8701E035FF800834242 /* PostDetailViewModel.swift */,
+				4CD3F86E1E035A1300834242 /* PostDetailViewController.swift */,
 			);
 			path = PostDetailView;
 			sourceTree = "<group>";
@@ -362,6 +365,7 @@
 				4C9059921E01E7E400C7F793 /* Collection.swift in Sources */,
 				4CAF18581DF6171900C20F07 /* Comment.swift in Sources */,
 				4CAADFD41E0194AC00218D6F /* Persistence.swift in Sources */,
+				4C99F5A61F4C553E001C7D98 /* Pipe.swift in Sources */,
 				4CFA4C311F49F3860050A5C6 /* Error.swift in Sources */,
 				4CD3F86F1E035A1300834242 /* PostDetailViewController.swift in Sources */,
 				4CAF18561DF611C000C20F07 /* User.swift in Sources */,

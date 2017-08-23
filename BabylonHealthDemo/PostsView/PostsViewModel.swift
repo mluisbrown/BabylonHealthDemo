@@ -17,18 +17,36 @@ class PostsViewModel: NSObject {
     let cellIdentifier: String
     let configureCell: CellConfigurator
     let posts = MutableProperty([Post]())
+    let errorMessage = MutableProperty("")
+    let networkWarningText = MutableProperty<String?>(nil)
     
     init(dataModel: DataModel, cellIdentifier: String, configureCell: @escaping CellConfigurator) {
         self.dataModel = dataModel
         self.cellIdentifier = cellIdentifier
         self.configureCell = configureCell
+        super.init()
         
-        // create bindings
-        posts <~ self.dataModel.posts
+        createBindings()
+    }
+    
+    func createBindings() {
+        networkWarningText <~ dataModel.networkAvailable
+        .signal
+        .skipRepeats()
+        .map {
+            return $0 ? nil : "Network unavailable"
+        }
     }
     
     func loadPosts() {
-        dataModel.loadPosts()
+        dataModel.loadPosts().startWithResult { 
+            switch $0 {
+            case .success(let posts):
+                self.posts.value = posts
+            case .failure(let error):
+                self.errorMessage.value = error.localizedDescription
+            }
+        }
     }
     
     func post(at index: Int) -> Post? {
