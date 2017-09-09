@@ -27,7 +27,7 @@ struct PostDetailViewModel {
     
     func createBindings() {
         networkWarningText <~ dataModel.networkAvailable
-            .signal
+            .producer
             .skipRepeats()
             .map {
                 return $0 ? nil : "Network unavailable"

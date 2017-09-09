@@ -11,35 +11,50 @@ import Result
 import ReactiveSwift
 
 class DataModel {
-    let posts = MutableProperty([Post]())
-    let users = MutableProperty([Int : User]())
-    let networkAvailable = MutableProperty(true)
+    private let posts = MutableProperty([Post]())
+    private let users = MutableProperty([Int : User]())
+    private let _networkAvailable = MutableProperty(true)
+    let networkAvailable: Property<Bool>
     
-    let network: Network
+    private let network: Network
     
     init(network: Network) {
         self.network = network
+        self.networkAvailable = Property(_networkAvailable)
+        createBindings()
+    }
+    
+    private func createBindings() {
+        NotificationCenter.default.reactive.notifications(forName: .UIApplicationWillResignActive)
+            .observeValues { _ in
+                self.persist()
+        }        
+    }
+    
+    private func makeNetworkRequest(with resource: Resource) -> SignalProducer<Data, DataError> {
+        return network.makeRequest(resource).map {  
+                return $0.0
+            }.on(failed: { _ in
+                self._networkAvailable.value = false
+            }, value: { _ in
+                self._networkAvailable.value = true
+            })
     }
     
     func loadPosts() -> SignalProducer<[Post], DataError> {
-        let resource = Resource(path: "/posts", method: .GET)
-        
-        return network.makeRequest(resource).map {  
-            self.networkAvailable.value = true
-            return $0.0            
-        }.on(failed: { _ in 
-            self.networkAvailable.value = false             
-        }).flatMapError { _ in
-            read(from: LocalResource.posts)
-        }.attemptMap { 
-            do {
-                return try .success(JSONDecoder().decode([Post].self, from: $0))
-            } catch {
-                return .failure(DataError.parser(error |> decodingErrorDescription))
+        let resource = Resource(path: "/posts", method: .GET)                
+        return makeNetworkRequest(with: resource)
+            .flatMapError { _ in
+                read(from: LocalResource.posts)
+            }.attemptMap {
+                do {
+                    return try .success(JSONDecoder().decode([Post].self, from: $0))
+                } catch {
+                    return .failure(DataError.parser(error |> decodingErrorDescription))
+                }
+            }.on {
+                self.posts.value = $0
             }
-        }.on { 
-            self.posts.value = $0
-        }
     }
     
     func loadUsers() -> SignalProducer<[Int : User], DataError> {
@@ -48,22 +63,18 @@ class DataModel {
         } 
 
         let resource = Resource(path: "/users", method: .GET)
-        return network.makeRequest(resource).map {  
-            self.networkAvailable.value = true
-            return $0.0            
-        }.on(failed: { _ in
-            self.networkAvailable.value = false
-        }).flatMapError { _ in
-            read(from: LocalResource.users)            
-        }.attemptMap { 
-            do {
-                return try .success(JSONDecoder().decode([User].self, from: $0).dictionary() { $0.id })
-            } catch {
-                return .failure(DataError.parser(error |> decodingErrorDescription))
-            }            
-        }.on { 
-            self.users.value = $0
-        }
+        return makeNetworkRequest(with: resource)
+            .flatMapError { _ in
+                read(from: LocalResource.users)
+            }.attemptMap {
+                do {
+                    return try .success(JSONDecoder().decode([User].self, from: $0).dictionary() { $0.id })
+                } catch {
+                    return .failure(DataError.parser(error |> decodingErrorDescription))
+                }
+            }.on {
+                self.users.value = $0
+            }
     }
     
     func loadComments(for postId: Int) -> SignalProducer<[Comment], DataError> {
@@ -78,17 +89,16 @@ class DataModel {
         }
         
         let resource = Resource(path: "/comments", method: .GET, query: ["postId" : String(post.id)])    
-        return network.makeRequest(resource).map { 
-            $0.0
-        }.attemptMap { 
-            do {
-                return try .success(JSONDecoder().decode([Comment].self, from: $0))
-            } catch {
-                return .failure(DataError.parser(error |> decodingErrorDescription))
+        return makeNetworkRequest(with: resource)
+            .attemptMap {
+                do {
+                    return try .success(JSONDecoder().decode([Comment].self, from: $0))
+                } catch {
+                    return .failure(DataError.parser(error |> decodingErrorDescription))
+                }
+            }.on {
+                self.posts.value[postInfo.offset].comments = $0
             }
-        }.on {
-            self.posts.value[postInfo.offset].comments = $0
-        }
     }
     
     func persist() {

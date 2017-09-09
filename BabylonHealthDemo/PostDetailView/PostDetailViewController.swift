@@ -37,17 +37,12 @@ class PostDetailViewController: UIViewController, ErrorAlertPresentable {
         bodyLabel.text = viewModel.post.body
         authorLabel.reactive.text <~ viewModel.userName
         commentCountLabel.reactive.text <~ viewModel.commentCount
+        navigationItem.reactive.prompt <~ viewModel.networkWarningText.producer
         
         viewModel.errorMessage.signal
             .observe(on: UIScheduler())
             .observeValues { [weak self] errorText in
                 self?.showErrorAlert(withMsg: errorText)
         }
-        
-        viewModel.networkWarningText.signal
-            .observe(on: UIScheduler())
-            .observeValues{ [weak self] msg in
-                self?.navigationItem.prompt = msg
-        }
-    }    
+    }
 }

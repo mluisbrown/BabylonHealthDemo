@@ -29,10 +29,7 @@ class PostsViewController: UITableViewController, ErrorAlertPresentable {
         
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(persistDataModel),
-                                               name: .UIApplicationWillResignActive, object: nil)
-        
-        tableView.dataSource = viewModel
+        tableView.dataSource = viewModel.tableViewDataSource
         
         bindToModel()
         viewModel.loadPosts()
@@ -51,11 +48,7 @@ class PostsViewController: UITableViewController, ErrorAlertPresentable {
                 self?.showErrorAlert(withMsg: errorText)
         }
         
-        viewModel.networkWarningText.signal
-            .observe(on: UIScheduler())
-            .observeValues{ [weak self] msg in
-                self?.navigationItem.prompt = msg
-        }        
+        navigationItem.reactive.prompt <~ viewModel.networkWarningText.producer
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
