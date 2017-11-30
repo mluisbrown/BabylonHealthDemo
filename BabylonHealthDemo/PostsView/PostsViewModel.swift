@@ -12,30 +12,27 @@ import ReactiveSwift
 
 typealias CellConfigurator = (_ cell: UITableViewCell, _ post: Post) -> Void
 
-class PostsViewModel: NSObject {
+struct PostsViewModel {
     let dataModel: DataModel
-    let cellIdentifier: String
-    let configureCell: CellConfigurator
     let posts = MutableProperty([Post]())
     let errorMessage = MutableProperty("")
     let networkWarningText = MutableProperty<String?>(nil)
+    let tableViewDataSource: UITableViewDataSource
     
     init(dataModel: DataModel, cellIdentifier: String, configureCell: @escaping CellConfigurator) {
         self.dataModel = dataModel
-        self.cellIdentifier = cellIdentifier
-        self.configureCell = configureCell
-        super.init()
+        self.tableViewDataSource = PostsViewModelDataSource(cellIdentifier: cellIdentifier, configureCell: configureCell, posts: Property(posts))
         
         createBindings()
     }
     
     func createBindings() {
         networkWarningText <~ dataModel.networkAvailable
-        .signal
-        .skipRepeats()
-        .map {
-            return $0 ? nil : "Network unavailable"
-        }
+            .producer
+            .skipRepeats()
+            .map {
+                return $0 ? nil : "Network unavailable"
+            }
     }
     
     func loadPosts() {
@@ -58,7 +55,19 @@ class PostsViewModel: NSObject {
     }
 }
 
-extension PostsViewModel: UITableViewDataSource {
+class PostsViewModelDataSource: NSObject {
+    let configureCell: CellConfigurator
+    let cellIdentifier: String
+    let posts: Property<[Post]>
+    
+    init(cellIdentifier: String, configureCell: @escaping CellConfigurator, posts: Property<[Post]>) {
+        self.configureCell = configureCell
+        self.cellIdentifier = cellIdentifier
+        self.posts = posts
+    }
+}
+
+extension PostsViewModelDataSource: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.value.count
     }
